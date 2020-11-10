@@ -2,6 +2,17 @@
 
 helping @el-hult make delicious rose hip wine
 
+## using the tool
+
+this is currently not published to pypi, so you'll have to clone it. then, install it with `pip`:
+
+```sh
+git clone https://github.com/tomasaschan/hiplog
+pip install ./hiplog
+```
+
+you now have `hiplog` on your path; check `hiplog --help` for usage.
+
 ## dev environment setup
 
 you'll need python 3.9+ and `pip` to install packages. you'll also want to install a type checker; for vs code, probably [pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance).
