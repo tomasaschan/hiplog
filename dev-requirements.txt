@@ -1,4 +1,6 @@
 -e .
 
-flake8
 black
+flake8
+pytest
+pytest-custom_exit_code

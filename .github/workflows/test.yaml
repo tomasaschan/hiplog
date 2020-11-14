@@ -1,0 +1,54 @@
+name: Build and Test
+
+on:
+  - push
+
+jobs:
+  build-lint-typecheck-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Node
+        uses: actions/setup-node@v1
+        with:
+          version: "12"
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+
+      - uses: actions/cache@v2
+        env:
+          cache-name: pip-packages
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ env.cache-name }}-${{ hashFiles('*requirements.txt', 'setup.cfg')}}
+      - uses: actions/cache@v2
+        env:
+          cache-name: pip-packages
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ env.cache-name }}
+
+      - uses: actions/checkout@v2
+
+      - name: Install dependencies and tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r <(grep -v -e '-e .' dev-requirements.txt)
+          npm install --global pyright
+
+      - name: Build hiplog
+        run: pip install .
+
+      - name: Lint with flake8
+        run: |
+          flake8 --count --show-source --statistics
+
+      - name: Type check with Pyright
+        run: |
+          pyright
+
+      - name: Run unit tests
+        run: |
+          pytest
