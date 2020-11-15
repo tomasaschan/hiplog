@@ -1,16 +1,14 @@
 import datetime
 
-from dataclasses import dataclass
-from enum import Enum
-
-
-class EventType(Enum):
-    CREATED = "created"
+from dataclasses import dataclass, field
+from typing import Any
+from uuid import UUID, uuid4
 
 
 @dataclass
 class Event:
-    type: EventType
-    date: datetime.datetime
-    title: str
-    documentation: str
+    item_id: str
+    timestamp: datetime.datetime
+    note: str
+    payload: Any
+    id: UUID = field(default_factory=uuid4)
