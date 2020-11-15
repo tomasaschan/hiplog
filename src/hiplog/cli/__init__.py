@@ -1,12 +1,11 @@
 import click
 
+from hiplog.cli.createitem import register as register_create_item
+
 
 @click.group()
 def cli():
     pass
 
 
-@cli.command()
-def hello():
-    """Say hello"""
-    click.echo("hello")
+register_create_item(cli)
