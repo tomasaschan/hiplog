@@ -27,7 +27,7 @@ you can set your environment it up however you want, but this is a way that work
 
        export PATH="$HOME/.pyenv/bin:$PATH"
        eval "$(pyenv init -)"
-       eval "$(pyenv-virtualenv init -)"
+       eval "$(pyenv virtualenv init -)"
 
 2. install python 3.9:
 
