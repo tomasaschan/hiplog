@@ -15,6 +15,7 @@ class ItemType(ParsableEnum):
 @dataclass
 class ItemCreatedV1:
     type: ItemType
+    parents: tuple[str]
 
 
 @dataclass
