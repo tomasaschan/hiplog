@@ -7,7 +7,6 @@ from uuid import UUID, uuid4
 
 from hiplog.model import ParsableEnum
 
-
 class ItemType(ParsableEnum):
     hips = auto()
 

@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 import datetime
 
 from hiplog.db import save_events
@@ -21,7 +22,6 @@ def create_item(
         payload=ItemCreatedV1(type),
     )
     save_events([event])
-
 
 class ItemIdExists(Exception):
     def __init__(self, id):
