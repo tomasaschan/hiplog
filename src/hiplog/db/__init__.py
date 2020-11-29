@@ -20,6 +20,7 @@ def save_events(events: list[Event]):
     with open(os.path.realpath(EVENTS_FILE), "ab") as f:
         pickle.dump(events, f)
 
+
 def with_events(fn):
     @functools.wraps(fn)
     def wrapped(*args, **kwds):
@@ -28,9 +29,11 @@ def with_events(fn):
 
     return wrapped
 
+
 @functools.cache
 def read_events():
     return list(read_events_from_disk())
+
 
 def read_events_from_disk() -> Iterable[Event]:
     """
