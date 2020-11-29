@@ -23,6 +23,7 @@ def create_item(
     )
     save_events([event])
 
+
 class ItemIdExists(Exception):
     def __init__(self, id):
         super().__init__(f"An item with the id {id} is already registered")
