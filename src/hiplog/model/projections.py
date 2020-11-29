@@ -4,6 +4,7 @@ import datetime
 from hiplog.db import with_events
 from hiplog.model.events import ItemCreatedV1
 
+
 @dataclass
 class Item:
     id: str
@@ -25,7 +26,7 @@ def all_items(events) -> dict[str, Item]:
     items = {}
     for event in sorted_events:
         if isinstance(event.payload, ItemCreatedV1):
-            item = Item(event.item_id,event.timestamp)
+            item = Item(event.item_id, event.timestamp)
             for parent in event.payload.parents:
                 item.parents.append(items[parent])
                 items[parent].children.append(item)
