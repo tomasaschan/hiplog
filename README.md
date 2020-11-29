@@ -51,4 +51,6 @@ you can set your environment it up however you want, but this is a way that work
 
 7. if you're using pylance, tell it to use this virtual environment, by using the "select python interpreter" from the command palette and browsing to `~/.pyenv/versions/hiplog/bin/python`
 
-8. install and activate the flake8 linter, since all commits to github will verify against flake8
+8. activate the linter `flake8` in your IDE. it is installed automatically. all commits to github will verify against flake8. 
+
+9. activate the formatter `black` in your IDE. it is installed automatically. activate "format on save" in your IDE.
