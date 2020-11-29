@@ -6,7 +6,6 @@ from hiplog.cli.helpers import datetime_with_zoneinfo, parse_enum
 from hiplog.model.createitem import ItemIdExists, create_item
 from hiplog.model.events import ItemType
 
-
 def register(parent):
     @parent.command("create-item")
     @click.option(
