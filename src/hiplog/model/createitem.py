@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 import datetime
 
 from hiplog.db import save_events
