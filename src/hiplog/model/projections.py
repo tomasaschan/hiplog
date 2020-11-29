@@ -2,15 +2,18 @@ from dataclasses import dataclass, field
 import datetime
 
 from hiplog.db import with_events
-from hiplog.model.events import ItemCreatedV1
+from hiplog.model.events import ItemCreatedV1, ItemType
+from hiplog.model.note import Note
 
 
 @dataclass
 class Item:
     id: str
     created_at: datetime.datetime
+    type: ItemType
     parents: list = field(default_factory=list)
     children: list = field(default_factory=list)
+    notes: list[Note] = field(default_factory=list)
 
 
 @with_events
@@ -26,7 +29,13 @@ def all_items(events) -> dict[str, Item]:
     items = {}
     for event in sorted_events:
         if isinstance(event.payload, ItemCreatedV1):
-            item = Item(event.item_id, event.timestamp)
+            print(event.payload)
+            item = Item(
+                event.item_id,
+                event.timestamp,
+                event.payload.type,
+                notes=[Note(event.note)],
+            )
             for parent in event.payload.parents:
                 item.parents.append(items[parent])
                 items[parent].children.append(item)

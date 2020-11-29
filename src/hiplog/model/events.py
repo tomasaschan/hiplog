@@ -10,6 +10,7 @@ from hiplog.model import ParsableEnum
 
 class ItemType(ParsableEnum):
     hips = auto()
+    batch = auto()
 
 
 @dataclass

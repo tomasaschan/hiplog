@@ -5,7 +5,8 @@ class ParsableEnum(Enum):
     @classmethod
     def parse(cls, value):
         for m in cls.__members__:
-            return cls[m]
+            if m == value:
+                return cls[m]
         else:
             raise ValueError(
                 f"{value} is not a valid {cls.__name__}"
