@@ -1,6 +1,8 @@
 from dataclasses import dataclass, field
 import datetime
 
+import click
+
 from hiplog.db import with_events
 from hiplog.model.events import ItemCreatedV1, ItemType
 from hiplog.model.note import Note
@@ -17,8 +19,8 @@ class Item:
 
 
 @with_events
-def existing_ids(events):
-    for event in events:
+def existing_ids(events, until: datetime.datetime = None):
+    for event in filter(lambda event: event.timestamp <= until, events):
         if isinstance(event.payload, ItemCreatedV1):
             yield event.item_id
 
@@ -29,7 +31,7 @@ def all_items(events) -> dict[str, Item]:
     items = {}
     for event in sorted_events:
         if isinstance(event.payload, ItemCreatedV1):
-            print(event.payload)
+            click.echo(event.payload)
             item = Item(
                 event.item_id,
                 event.timestamp,

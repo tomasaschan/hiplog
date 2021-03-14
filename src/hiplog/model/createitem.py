@@ -8,10 +8,10 @@ from hiplog.model.events import Event, ItemCreatedV1, ItemType
 def create_item(
     timestamp: datetime.datetime, type: ItemType, id: str, note, parents: tuple[str]
 ):
-    if not all(parent in existing_ids() for parent in parents):
+    if not all(parent in existing_ids(until=timestamp) for parent in parents):
         raise InvalidParent(id)
 
-    if id in existing_ids():
+    if id in existing_ids(until=timestamp):
         raise ItemIdExists(id)
 
     event = Event(
@@ -31,5 +31,5 @@ class ItemIdExists(Exception):
 
 class InvalidParent(Exception):
     def __init__(self, id):
-        super().__init__(f"The proposed parent {id} does not exist")
+        super().__init__(f"The proposed parents of {id} are invalid")
         self.id = id
