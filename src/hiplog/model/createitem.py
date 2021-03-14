@@ -6,19 +6,19 @@ from hiplog.model.events import Event, ItemCreatedV1, ItemType
 
 
 def create_item(
-    timestamp: datetime.datetime,
-    type: ItemType,
-    id: str,
-    note,
+    timestamp: datetime.datetime, type: ItemType, id: str, note, parents: tuple[str]
 ):
-    if id in existing_ids():
+    if not all(parent in existing_ids(until=timestamp) for parent in parents):
+        raise InvalidParent(id)
+
+    if id in existing_ids(until=timestamp):
         raise ItemIdExists(id)
 
     event = Event(
         item_id=id,
         timestamp=timestamp,
         note=note.name,
-        payload=ItemCreatedV1(type),
+        payload=ItemCreatedV1(type, parents),
     )
     save_events([event])
 
@@ -26,4 +26,10 @@ def create_item(
 class ItemIdExists(Exception):
     def __init__(self, id):
         super().__init__(f"An item with the id {id} is already registered")
+        self.id = id
+
+
+class InvalidParent(Exception):
+    def __init__(self, id):
+        super().__init__(f"The proposed parents of {id} are invalid")
         self.id = id

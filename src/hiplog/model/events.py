@@ -10,11 +10,13 @@ from hiplog.model import ParsableEnum
 
 class ItemType(ParsableEnum):
     hips = auto()
+    batch = auto()
 
 
 @dataclass
 class ItemCreatedV1:
     type: ItemType
+    parents: tuple[str]
 
 
 @dataclass

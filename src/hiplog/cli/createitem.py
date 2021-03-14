@@ -22,14 +22,16 @@ def register(parent):
         callback=parse_enum(ItemType),
     )
     @click.option("--id", type=str, required=True)
+    @click.option("--parent", type=str, required=False, multiple=True)
     @click.option("--note", type=click.File(), required=True)
     def create_item_cli(
         timestamp: datetime.datetime,
         type: ItemType,
         id: str,
         note: click.File,
+        parent: tuple[str],
     ):
         try:
-            create_item(timestamp, type, id, note)
+            create_item(timestamp, type, id, note, parent)
         except ItemIdExists as ex:
             raise click.ClickException(str(ex))
